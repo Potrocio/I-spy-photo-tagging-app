@@ -1,10 +1,14 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 export default function NewGame({ mainMenu }) {
     const [username, setUsername] = useState('')
 
-    function handleSubmit() {
+    const navigate = useNavigate();
 
+    function handleSubmit(e) {
+        e.preventDefault();
+        navigate('gameboard')
     }
 
     function handleChange(e) {

@@ -1,0 +1,13 @@
+.gameboardWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    height: 100%;
+    width: 66vw;
+}
+
+.gameImage {
+    max-width: 100%;
+}

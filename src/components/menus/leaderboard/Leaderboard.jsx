@@ -28,6 +28,11 @@ export default function Leaderboard({ mainMenu }) {
                 value={query}
                 onChange={handleChange}
             />
+            <ul>
+                {filteredScores.map((player, index) => {
+                    return <li key={index}>Player: {player.name}   Score: {player.time}</li>
+                })}
+            </ul>
         </div>
     )
 }

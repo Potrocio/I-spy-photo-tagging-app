@@ -1,17 +1,18 @@
 body {
   padding: 0;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  background-color: rgb(231, 220, 205);
+  background-color: rgb(255, 255, 255);
 }
 
 #root {
+  display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 66vw;
   box-shadow: rgb(0, 0, 0) 0px 0px 10px 1px;
-  min-height: 100vh;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
 }
 
 * {

@@ -8,7 +8,9 @@ export default function NewGame({ mainMenu }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        navigate('gameboard')
+        if (username) {
+            navigate('gameboard')
+        }
     }
 
     function handleChange(e) {

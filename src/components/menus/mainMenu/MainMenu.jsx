@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Leaderboard from "../leaderboard/Leaderboard"
 import NewGame from "../newGame/NewGame"
+import styles from "./mainMenu.module.css"
 
 export default function MainMenu() {
     const [menu, setMenu] = useState("Main")
@@ -19,7 +20,7 @@ export default function MainMenu() {
     return (
         <>
             {menu == "Main" ?
-                (<div className="mainMenuWrapper">
+                (<div className={styles.mainMenuWrapper}>
                     <button onClick={loadLeaderboard}>Leaderboard</button>
                     <button onClick={loadNewGame}>New Game</button>
                 </div>)

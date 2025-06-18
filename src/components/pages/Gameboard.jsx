@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import styles from "./pages.module.css"
 import GameHUD from "../gameHUD/GameHUD";
@@ -6,6 +6,8 @@ import TargetSelection from "../menus/targetSelection/TargetSelection";
 import TargetFoundMessage from "../gameMessages/TargetFoundMessage";
 import TargetNotFoundMessage from "../gameMessages/TargetNotFoundMessage";
 import GameFinished from "../menus/gameFinished/GameFinished";
+import gameImage from "../../assets/gameImage.png"
+
 
 export default function Gameboard() {
 
@@ -15,8 +17,16 @@ export default function Gameboard() {
     const [targetFoundMessage, setTargetFoundMessage] = useState(false)
     const [targetNotFoundMessage, setTargetNotFoundMessage] = useState(false)
     const [gameFinished, setGameFinished] = useState(false)
+    const [targetsFound, setTargetsFound] = useState([{
+        object: "Shield",
+        xmin: .33,
+        xmax: .67,
+        ymin: .75,
+        ymax: 1.00,
+    }])
 
-    // const [targetFound, setTargetFound] = useState(false)
+
+    const imgRef = useRef(null);
 
     const navigate = useNavigate();
 
@@ -41,16 +51,34 @@ export default function Gameboard() {
     }
 
     const temporaryTargets = [
-        "hat",
-        "coat",
-        "apple",
-        "orange",
+        "Book",
+        "Credit card",
+        "Key",
+        "Sunglasses",
+        "Mirror",
+        "Cross",
+        "Crystal ball",
+        "Gear",
+        "Microscope",
+        "Toolbox",
+        "Shield",
+        "Capybara",
     ]
 
-    function handleImageClick() {
+    function handleImageClick(e) {
         if (!targetSelectionMenu) {
             setTargetSelectionMenu(prev => !prev)
             setTargetSelected('')
+            const img = imgRef.current;
+            const rect = img.getBoundingClientRect();
+
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const normalizedX = x / rect.width;
+            const normalizedY = y / rect.height;
+            console.log("normalizedX", normalizedX)
+            console.log("normalizedY", normalizedY)
         }
     }
 
@@ -62,14 +90,34 @@ export default function Gameboard() {
 
     return (
         <div className={styles.gameboardWrapper}>
+
             <GameHUD
                 mainMenu={mainMenu}
                 targetListOpen={targetListOpen}
                 toggleTargetList={toggleTargetList}
                 temporaryTargets={temporaryTargets}
                 temporaryTimer={temporaryTimer}
+                targetsFound={targetsFound}
             />
-            <img onClick={handleImageClick} className={styles.gameImage} src="https://images.pexels.com/photos/906055/pexels-photo-906055.jpeg?_gl=1*1yzk34i*_ga*MjU2MzY2OTIuMTcxMzA2NjYyNg..*_ga_8JE65Q40S6*czE3NTAxMjMyNzUkbzEzJGcxJHQxNzUwMTIzMjk5JGozNiRsMCRoMA.." alt="I spy image" />
+            <div className={styles.imageWrapper}>
+                <img ref={imgRef} onClick={handleImageClick} className={styles.gameImage} src={gameImage} alt="I spy image" />
+                {targetsFound.map((target, index) => (
+                    <div
+                        key={index}
+                        style={{
+                            position: "absolute",
+                            left: `${target.xmin * 100}%`,
+                            top: `${target.ymin * 100}%`,
+                            width: `${(target.xmax - target.xmin) * 100}%`,
+                            height: `${(target.ymax - target.ymin) * 100}%`,
+                            border: "2px solid limegreen",
+                            pointerEvents: "none",
+                            boxSizing: "border-box",
+                        }}
+                    />
+                ))}
+
+            </div>
             {targetSelectionMenu &&
                 <TargetSelection
                     toggleTargetSelectionMenu={toggleTargetSelectionMenu}
@@ -79,6 +127,7 @@ export default function Gameboard() {
                     toggleTargetFoundMessage={toggleTargetFoundMessage}
                     toggleTargetNotFoundMessage={toggleTargetNotFoundMessage}
                     toggleGameFinished={toggleGameFinished}
+                    targetsFound={targetsFound}
                 />}
             {targetFoundMessage &&
                 <TargetFoundMessage
@@ -92,6 +141,10 @@ export default function Gameboard() {
                 <GameFinished
                     toggleGameFinished={toggleGameFinished}
                 />}
+
         </div>
     )
 }
+
+// coordinates are X = 0 33 67 100
+// y = 23 50 75

@@ -2,4 +2,53 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    position: relative;
+}
+
+.counter {
+    color: white;
+}
+
+.targetButton {
+    background-color: orangered;
+    border-radius: 5px;
+}
+
+.menuButton {
+    background-color: gray;
+    color: white;
+    border-radius: 5px;
+}
+
+.targetButton:hover {
+    cursor: grab;
+}
+
+.menuButton:hover {
+    cursor: grab;
+}
+
+.targetListWrapper {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding-top: 15px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 5px;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.targetFound {
+    text-decoration: line-through;
+}
+
+.closeButton {
+    margin-top: 15px;
+    margin-bottom: 15px;
 }

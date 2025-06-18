@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./targetSelection.module.css"
 
-export default function TargetSelection({ toggleTargetSelectionMenu, temporaryTargets, targetSelected, setTargetSelected, toggleTargetFoundMessage, toggleTargetNotFoundMessage, toggleGameFinished }) {
+export default function TargetSelection({ toggleTargetSelectionMenu, temporaryTargets, targetSelected, setTargetSelected, toggleTargetFoundMessage, toggleTargetNotFoundMessage, toggleGameFinished, targetsFound }) {
 
     function handleClick(e) {
         const selected = e.target.textContent;
@@ -29,12 +29,20 @@ export default function TargetSelection({ toggleTargetSelectionMenu, temporaryTa
 
     }
 
+    const listOfTargetsFound = targetsFound.map(target => {
+        return target.object;
+    })
+
+    const filteredTargets = temporaryTargets.filter((target) => {
+        return !listOfTargetsFound.includes(target)
+    })
+
     return (
         <>
             <div className={styles.backdrop}></div>
             <div className={styles.targetSelectionWrapper}>
                 <button onClick={toggleTargetSelectionMenu}>X</button>
-                {temporaryTargets.map((target, index) => {
+                {filteredTargets.map((target, index) => {
                     return <div className={`${styles.targetItem} ${targetSelected === target ? styles.targetSelected : ''}`} onClick={handleClick} key={index}>{target}</div>
                 })}
                 <button onClick={submitTargetSelected}>Submit</button>

@@ -1,36 +1,57 @@
-import { useState } from "react";
 import styles from "./targetSelection.module.css"
 
-export default function TargetSelection({ toggleTargetSelectionMenu, temporaryTargets, targetSelected, setTargetSelected, toggleTargetFoundMessage, toggleTargetNotFoundMessage, toggleGameFinished, targetsFound }) {
+export default function TargetSelection({ toggleTargetSelectionMenu, temporaryTargets, targetSelected, setTargetSelected, toggleTargetFoundMessage, toggleTargetNotFoundMessage, toggleGameFinished, targetsFound, coordinates, setTargetsFound }) {
 
     function handleClick(e) {
         const selected = e.target.textContent;
         setTargetSelected(selected)
     }
 
-    function submitTargetSelected() {
+    async function submitTargetSelected() {
         if (targetSelected) {
-            toggleTargetSelectionMenu();
-            const match = temporaryTargets.includes(targetSelected)
-            const gameFinished = true;
-            if (match) {
-                // make green border of that item visible
-                // If game finished load game finished menu else load target foundmenu
-                if (gameFinished) {
-                    // load game finished menu
-                    toggleGameFinished();
-                } else {
-                    toggleTargetFoundMessage();
+            try {
+                toggleTargetSelectionMenu();
+                const response = await fetch(`http://localhost:4044/targets/${targetSelected}/verify`, {
+                    method: "POST",
+                    mode: "cors",
+                    body: JSON.stringify(coordinates),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`)
                 }
-            } else {
-                toggleTargetNotFoundMessage();
+                const { match } = await response.json()
+
+                if (match !== false) {
+                    setTargetsFound(prev => {
+                        const updatedState = [...prev, match]
+
+                        const gameFinished = updatedState.length === 12;
+
+                        if (gameFinished) {
+                            // load game finished menu
+                            toggleGameFinished();
+                        } else {
+                            toggleTargetFoundMessage();
+                            console.log('hi')
+                        }
+                        return updatedState
+                    })
+                } else {
+                    toggleTargetNotFoundMessage();
+                }
+
+            } catch (error) {
+                console.log("Submit target error:", error)
             }
         }
-
     }
 
     const listOfTargetsFound = targetsFound.map(target => {
-        return target.object;
+        return target.name;
     })
 
     const filteredTargets = temporaryTargets.filter((target) => {

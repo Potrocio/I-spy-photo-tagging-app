@@ -12,18 +12,13 @@ import gameImage from "../../assets/gameImage.png"
 export default function Gameboard() {
 
     const [targetListOpen, setTargetListOpen] = useState(false)
+    const [coordinates, setCoordinates] = useState({})
     const [targetSelectionMenu, setTargetSelectionMenu] = useState(false)
     const [targetSelected, setTargetSelected] = useState('')
     const [targetFoundMessage, setTargetFoundMessage] = useState(false)
     const [targetNotFoundMessage, setTargetNotFoundMessage] = useState(false)
     const [gameFinished, setGameFinished] = useState(false)
-    const [targetsFound, setTargetsFound] = useState([{
-        object: "Shield",
-        xmin: .33,
-        xmax: .67,
-        ymin: .75,
-        ymax: 1.00,
-    }])
+    const [targetsFound, setTargetsFound] = useState([])
 
 
     const imgRef = useRef(null);
@@ -77,8 +72,11 @@ export default function Gameboard() {
 
             const normalizedX = x / rect.width;
             const normalizedY = y / rect.height;
-            console.log("normalizedX", normalizedX)
-            console.log("normalizedY", normalizedY)
+
+            setCoordinates({
+                x: normalizedX,
+                y: normalizedY,
+            })
         }
     }
 
@@ -101,15 +99,15 @@ export default function Gameboard() {
             />
             <div className={styles.imageWrapper}>
                 <img ref={imgRef} onClick={handleImageClick} className={styles.gameImage} src={gameImage} alt="I spy image" />
-                {targetsFound.map((target, index) => (
+                {targetsFound.length > 0 && targetsFound.map((target, index) => (
                     <div
                         key={index}
                         style={{
                             position: "absolute",
-                            left: `${target.xmin * 100}%`,
-                            top: `${target.ymin * 100}%`,
-                            width: `${(target.xmax - target.xmin) * 100}%`,
-                            height: `${(target.ymax - target.ymin) * 100}%`,
+                            left: `${target.xMin * 100}%`,
+                            top: `${target.yMin * 100}%`,
+                            width: `${(target.xMax - target.xMin) * 100}%`,
+                            height: `${(target.yMax - target.yMin) * 100}%`,
                             border: "2px solid limegreen",
                             pointerEvents: "none",
                             boxSizing: "border-box",
@@ -128,6 +126,8 @@ export default function Gameboard() {
                     toggleTargetNotFoundMessage={toggleTargetNotFoundMessage}
                     toggleGameFinished={toggleGameFinished}
                     targetsFound={targetsFound}
+                    coordinates={coordinates}
+                    setTargetsFound={setTargetsFound}
                 />}
             {targetFoundMessage &&
                 <TargetFoundMessage

@@ -26,7 +26,6 @@ export default function Leaderboard({ mainMenu }) {
                 }
 
                 const data = await response.json();
-                console.log(data, "data")
                 setScores(data)
             } catch (error) {
                 console.log("Error fetching user:", error)

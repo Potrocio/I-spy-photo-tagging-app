@@ -84,8 +84,6 @@ export default function Gameboard() {
         setGameFinished(prev => !prev)
     }
 
-    const temporaryTimer = "5m 3s"
-
     return (
         <div className={styles.gameboardWrapper}>
 
@@ -94,8 +92,8 @@ export default function Gameboard() {
                 targetListOpen={targetListOpen}
                 toggleTargetList={toggleTargetList}
                 temporaryTargets={temporaryTargets}
-                temporaryTimer={temporaryTimer}
                 targetsFound={targetsFound}
+                gameFinished={gameFinished}
             />
             <div className={styles.imageWrapper}>
                 <img ref={imgRef} onClick={handleImageClick} className={styles.gameImage} src={gameImage} alt="I spy image" />

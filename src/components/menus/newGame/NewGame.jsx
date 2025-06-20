@@ -6,10 +6,32 @@ export default function NewGame({ mainMenu }) {
 
     const navigate = useNavigate();
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         if (username) {
-            navigate('gameboard')
+            try {
+                const response = await fetch("http://localhost:4044/users", {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ username })
+                })
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`)
+                }
+
+                const user = await response.json()
+
+                if (user) {
+                    localStorage.setItem("userStart", JSON.stringify(user))
+                    navigate('gameboard')
+                }
+            } catch (error) {
+                console.log(`User creation error: ${error}`)
+            }
         }
     }
 

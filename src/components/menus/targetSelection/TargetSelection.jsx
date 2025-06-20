@@ -26,20 +26,33 @@ export default function TargetSelection({ toggleTargetSelectionMenu, temporaryTa
                 const { match } = await response.json()
 
                 if (match !== false) {
-                    setTargetsFound(prev => {
-                        const updatedState = [...prev, match]
+                    const updatedState = [...targetsFound, match]
+                    setTargetsFound(updatedState)
+                    const gameFinished = updatedState.length === 12;
 
-                        const gameFinished = updatedState.length === 12;
+                    if (gameFinished) {
+                        // load game finished menu
+                        try {
+                            const userStart = JSON.parse(localStorage.getItem("userStart"))
+                            const response = await fetch(`http://localhost:4044/users/${userStart.id}`, {
+                                method: "PATCH",
+                                mode: "cors",
+                            })
 
-                        if (gameFinished) {
-                            // load game finished menu
+                            if (!response.ok) {
+                                throw new Error(`Game finished attempt error: ${response.status}`)
+                            }
+
+                            const user = await response.json();
+                            localStorage.setItem("user", JSON.stringify(user))
                             toggleGameFinished();
-                        } else {
-                            toggleTargetFoundMessage();
-                            console.log('hi')
+                        } catch (error) {
+                            console.log("Error updating score:", error)
                         }
-                        return updatedState
-                    })
+                    } else {
+                        toggleTargetFoundMessage();
+                    }
+
                 } else {
                     toggleTargetNotFoundMessage();
                 }

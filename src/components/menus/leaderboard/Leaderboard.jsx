@@ -27,6 +27,7 @@ export default function Leaderboard({ mainMenu }) {
 
                 const data = await response.json();
                 setScores(data)
+                console.log(scores)
             } catch (error) {
                 console.log("Error fetching user:", error)
             }
@@ -36,7 +37,7 @@ export default function Leaderboard({ mainMenu }) {
     }, [])
 
     const filteredScores = scores.filter(player =>
-        player.name.toLowerCase().startsWith(query.toLowerCase())
+        player.username.toLowerCase().startsWith(query.toLowerCase())
     );
 
 
@@ -63,7 +64,7 @@ export default function Leaderboard({ mainMenu }) {
 
                 {filteredScores.length > 0 &&
                     filteredScores.map((player, index) => (
-                        <li key={index}>Player: {player.name} Score: {player.time}</li>
+                        <li key={index}>Player: {player.username} Score: {player.score}</li>
                     ))}
             </ul>
         </div>

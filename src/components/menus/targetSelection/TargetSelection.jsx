@@ -50,7 +50,10 @@ export default function TargetSelection({ toggleTargetSelectionMenu, temporaryTa
                             console.log("Error updating score:", error)
                         }
                     } else {
-                        toggleTargetFoundMessage();
+                        //This displays a menu for when the target is found
+                        //I am commenting it out until further review
+                        //Due to questionable UX
+                        // toggleTargetFoundMessage();
                     }
 
                 } else {
@@ -75,11 +78,11 @@ export default function TargetSelection({ toggleTargetSelectionMenu, temporaryTa
         <>
             <div className={styles.backdrop}></div>
             <div className={styles.targetSelectionWrapper}>
-                <button onClick={toggleTargetSelectionMenu}>X</button>
+                <button onClick={toggleTargetSelectionMenu} className={styles.closeMenu}>X</button>
                 {filteredTargets.map((target, index) => {
                     return <div className={`${styles.targetItem} ${targetSelected === target ? styles.targetSelected : ''}`} onClick={handleClick} key={index}>{target}</div>
                 })}
-                <button onClick={submitTargetSelected}>Submit</button>
+                <button className={styles.submitButton} onClick={submitTargetSelected}>Submit</button>
             </div>
         </>
     )

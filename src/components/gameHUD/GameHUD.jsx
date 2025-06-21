@@ -33,7 +33,7 @@ export default function GameHUD({ mainMenu, targetListOpen, toggleTargetList, te
     const s = String(secs).padStart(2, '0');
 
     const listOfTargetsFound = targetsFound.map(target => {
-        return target.object;
+        return target.name;
     })
 
     return (

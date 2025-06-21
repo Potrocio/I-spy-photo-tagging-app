@@ -46,6 +46,7 @@
 
 .targetFound {
     text-decoration: line-through;
+    color: #5aff8c;
 }
 
 .closeButton {

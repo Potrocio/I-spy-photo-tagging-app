@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
+import styles from "./newGame.module.css"
 
 export default function NewGame({ mainMenu }) {
     const [username, setUsername] = useState('')
+    const [message, setMessage] = useState('')
 
     const navigate = useNavigate();
 
@@ -10,6 +12,11 @@ export default function NewGame({ mainMenu }) {
         e.preventDefault();
         if (username) {
             try {
+                if (username.length > 12 || username.length < 4) {
+                    setMessage("Username has to be between 4 to 12 characters")
+                    return
+                }
+
                 const response = await fetch("http://localhost:4044/users", {
                     method: "POST",
                     mode: "cors",
@@ -18,6 +25,10 @@ export default function NewGame({ mainMenu }) {
                     },
                     body: JSON.stringify({ username })
                 })
+
+                if (response.status == 409) {
+                    setMessage("Username already exists")
+                }
 
                 if (!response.ok) {
                     throw new Error(`Server error: ${response.status}`)
@@ -32,6 +43,8 @@ export default function NewGame({ mainMenu }) {
             } catch (error) {
                 console.log(`User creation error: ${error}`)
             }
+        } else {
+            setMessage("Must create a username")
         }
     }
 
@@ -40,26 +53,30 @@ export default function NewGame({ mainMenu }) {
     }
 
     return (
-        <div className="newGameMenuWrapper">
-            <button onClick={mainMenu}>Menu</button>
-            <ul>
+        <div className={styles.newGameMenuWrapper}>
+            <button className={styles.menuButton} onClick={mainMenu}>Menu</button>
+
+            <ul className={styles.instructions}>
                 <li>Pick a unique username</li>
                 <li>Hit "Begin Game"</li>
                 <li>Find all the targets hidden in the image</li>
                 <li>The clock starts when you begin — your time is your score</li>
                 <li>Good luck!</li>
             </ul>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username: </label>
+
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <label htmlFor="username" className={styles.label}>Username:</label>
                 <input
                     type="text"
                     name="username"
                     id="username"
+                    className={styles.input}
                     onChange={handleChange}
                     value={username}
                 />
+                {message && <p className={styles.message}>{message}</p>}
 
-                <button type="submit">Begin Game</button>
+                <button type="submit" className={styles.beginButton}>Begin Game</button>
             </form>
         </div>
     )

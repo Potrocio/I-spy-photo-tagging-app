@@ -19,16 +19,20 @@ export default function MainMenu() {
     }
     return (
         <>
-            {menu == "Main" ?
-                (<div className={styles.mainMenuWrapper}>
-                    <button onClick={loadLeaderboard}>Leaderboard</button>
-                    <button onClick={loadNewGame}>New Game</button>
-                </div>)
-                : menu == "Leaderboard" ?
-                    (<Leaderboard mainMenu={mainMenu} />)
-                    :
-                    (<NewGame mainMenu={mainMenu} />)
-            }
+            {menu === "Main" ? (
+                <div className={styles.contentWrapper}>
+                    <h1 className={styles.title}>Photo Tagging App</h1>
+
+                    <div className={styles.mainMenuWrapper}>
+                        <button className={styles.menuButton} onClick={loadLeaderboard}>Leaderboard</button>
+                        <button className={styles.menuButton} onClick={loadNewGame}>New Game</button>
+                    </div>
+                </div>
+            ) : menu === "Leaderboard" ? (
+                <Leaderboard mainMenu={mainMenu} />
+            ) : (
+                <NewGame mainMenu={mainMenu} />
+            )}
         </>
     )
 }

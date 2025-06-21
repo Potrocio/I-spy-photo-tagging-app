@@ -1,0 +1,195 @@
+.contentWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    border: 1px solid black;
+    border: 1px solid rgb(55, 55, 255);
+    background-color: #1e1e2f;
+    border-radius: 6px;
+    box-shadow: inset 0 0 10px 1px rgba(78, 156, 255, 0.4);
+
+    min-width: 20vw;
+    min-height: 60vh;
+}
+
+.menuButton {
+    background-color: transparent;
+    color: #7fffd4;
+    border: 2px solid #4e9cff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0 6px rgba(78, 156, 255, 0.3);
+    transition: all 0.3s ease;
+    align-self: flex-start;
+    margin-bottom: 0.5rem;
+    margin-top: 3px;
+    margin-left: 3px;
+}
+
+.menuButton:hover {
+    background-color: #1e1e2f;
+    box-shadow: 0 0 10px rgba(127, 255, 212, 0.5);
+}
+
+.title {
+    color: #7fffd4;
+    font-size: 2rem;
+    font-family: 'Trebuchet MS', sans-serif;
+    text-shadow: 0 0 10px rgba(127, 255, 212, 0.4);
+    margin-bottom: 20px;
+}
+
+.searchBar {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.75rem 1rem;
+    background-color: #1e1e2f;
+    color: #ffffff;
+    border: 2px solid #4e9cff;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: 0 0 8px rgba(78, 156, 255, 0.5);
+    transition: 0.3s ease;
+}
+
+.searchBar:focus {
+    border-color: #7fffd4;
+    box-shadow: 0 0 12px rgba(127, 255, 212, 0.6);
+}
+
+.rankList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: rgba(30, 30, 47, 0.6);
+    border-radius: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    /* scroll if needed */
+    box-shadow: 0 0 12px rgba(78, 156, 255, 0.15);
+    width: 75%;
+}
+
+.rankHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    color: #7fffd4;
+    font-weight: bold;
+    font-size: 1rem;
+    font-family: 'Segoe UI', sans-serif;
+    border-bottom: 1px solid rgba(127, 255, 212, 0.3);
+}
+
+.rankCard {
+    background-color: rgba(30, 30, 47, 0.85);
+    color: #dceaff;
+    border-left: 4px solid #4e9cff;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1rem;
+    box-shadow: 0 0 6px rgba(78, 156, 255, 0.3);
+}
+
+.headerUsername {
+    flex: 1;
+    text-align: left;
+}
+
+.headerScore {
+    width: 60px;
+    /* or however wide you want for score */
+    text-align: right;
+}
+
+.playerName {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #7fffd4;
+}
+
+.playerScore {
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+@media (max-width: 800px) {
+
+    .mainMenuWrapper {
+        min-width: 85vw;
+        min-height: 25vh;
+    }
+
+    .mainMenuWrapper button {
+        min-width: 33%;
+    }
+}
+
+@media (max-width: 840px) {
+    .contentWrapper {
+        padding: 1rem;
+        min-width: unset;
+        width: 90vw;
+        min-height: 70vh;
+        border-radius: 10px;
+    }
+
+    .title {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .menuButton {
+        font-size: 0.95rem;
+        padding: 0.5rem 0.75rem;
+        margin-left: 0;
+        align-self: center;
+    }
+
+    .searchBar {
+        width: 100%;
+        max-width: none;
+        font-size: 0.95rem;
+        padding: 0.6rem 1rem;
+    }
+
+    .rankList {
+        width: 100%;
+        max-height: 60vh;
+        padding: 0.75rem;
+    }
+
+    .rankHeader {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    .rankCard {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    .playerName {
+        font-size: 1rem;
+    }
+
+    .playerScore {
+        font-size: 0.95rem;
+    }
+
+    .headerScore {
+        width: 55px;
+    }
+}

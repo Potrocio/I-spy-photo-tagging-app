@@ -1,17 +1,10 @@
 import { useEffect, useState } from "react"
+import styles from "./leaderboard.module.css"
 
 export default function Leaderboard({ mainMenu }) {
 
     const [scores, setScores] = useState([])
     const [query, setQuery] = useState('')
-
-
-    // const scores = [
-    //     { name: "Alice", time: 12.5 },
-    //     { name: "Bob", time: 14.2 },
-    //     { name: "Charlie", time: 15.1 },
-    //     { name: "Dave", time: 17.9 },
-    // ];
 
     useEffect(() => {
         async function fetchData() {
@@ -27,7 +20,6 @@ export default function Leaderboard({ mainMenu }) {
 
                 const data = await response.json();
                 setScores(data)
-                console.log(scores)
             } catch (error) {
                 console.log("Error fetching user:", error)
             }
@@ -40,31 +32,37 @@ export default function Leaderboard({ mainMenu }) {
         player.username.toLowerCase().startsWith(query.toLowerCase())
     );
 
-
-
     function handleChange(e) {
         setQuery(e.target.value)
     }
 
     return (
-        <div className="leaderboardMenuWrapper">
-            <button onClick={mainMenu}>Menu</button>
-            <p>Ranks</p>
-            <input type="text"
+        <div className={styles.contentWrapper}>
+            <button onClick={mainMenu} className={styles.menuButton}>Menu</button>
+            <p className={styles.title}>Ranks</p>
+            <input className={styles.searchBar} type="text"
                 placeholder="Search by username..."
                 value={query}
                 onChange={handleChange}
             />
-            <ul>
+            <ul className={styles.rankList}>
                 {scores.length === 0 && <li>No scores to display...</li>}
 
                 {scores.length > 0 && filteredScores.length === 0 && (
                     <li>No players match your search.</li>
                 )}
 
+                <div className={styles.rankHeader}>
+                    <div className={styles.headerUsername}>Username</div>
+                    <div className={styles.headerScore}>Score</div>
+                </div>
+
                 {filteredScores.length > 0 &&
                     filteredScores.map((player, index) => (
-                        <li key={index}>Player: {player.username} Score: {player.score}</li>
+                        <li key={index} className={styles.rankCard}>
+                            <div className={styles.playerName}>{player.username}</div>
+                            <div className={styles.playerScore}>{player.score}</div>
+                        </li>
                     ))}
             </ul>
         </div>

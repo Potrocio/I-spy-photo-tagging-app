@@ -5,8 +5,8 @@ export default function TargetNotFoundMessage({ toggleTargetNotFoundMessage }) {
         <>
             <div className={styles.backdrop}></div>
             <div className={styles.messageWrapper}>
-                <p>Target not found!</p>
-                <button onClick={toggleTargetNotFoundMessage}>Ok</button>
+                <p className={styles.message}>Target not found!</p>
+                <button className={styles.menuButton} onClick={toggleTargetNotFoundMessage}>Ok</button>
             </div>
         </>
     )

@@ -48,10 +48,10 @@ export default function Leaderboard({ mainMenu }) {
                 onChange={handleChange}
             />
             <ul className={styles.rankList}>
-                {scores.length === 0 && <li>No scores to display...</li>}
+                {scores.length === 0 && <li className={styles.message}>No scores to display...</li>}
 
                 {scores.length > 0 && rankedFilteredScores.length === 0 && (
-                    <li>No players match your search.</li>
+                    <li className={styles.message}>No players match your search.</li>
                 )}
 
                 <div className={styles.rankHeader}>

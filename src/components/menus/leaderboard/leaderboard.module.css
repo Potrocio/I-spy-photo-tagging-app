@@ -76,6 +76,12 @@
     width: 75%;
 }
 
+.message {
+    color: white;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .rankHeader {
     display: flex;
     justify-content: space-between;

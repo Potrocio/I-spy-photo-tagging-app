@@ -7,11 +7,13 @@ export default function TargetSelection({ toggleTargetSelectionMenu, temporaryTa
         setTargetSelected(selected)
     }
 
+    const baseUrl = import.meta.env.VITE_API_URL;
+
     async function submitTargetSelected() {
         if (targetSelected) {
             try {
                 toggleTargetSelectionMenu();
-                const response = await fetch(`http://localhost:4044/targets/${targetSelected}/verify`, {
+                const response = await fetch(`${baseUrl}/targets/${targetSelected}/verify`, {
                     method: "POST",
                     mode: "cors",
                     body: JSON.stringify(coordinates),
@@ -34,7 +36,7 @@ export default function TargetSelection({ toggleTargetSelectionMenu, temporaryTa
                         // load game finished menu
                         try {
                             const userStart = JSON.parse(localStorage.getItem("userStart"))
-                            const response = await fetch(`http://localhost:4044/users/${userStart.id}`, {
+                            const response = await fetch(`${baseUrl}/users/${userStart.id}`, {
                                 method: "PATCH",
                                 mode: "cors",
                             })

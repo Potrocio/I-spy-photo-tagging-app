@@ -8,6 +8,8 @@ export default function NewGame({ mainMenu }) {
 
     const navigate = useNavigate();
 
+    const baseUrl = import.meta.env.VITE_API_URL;
+
     async function handleSubmit(e) {
         e.preventDefault();
         if (username) {
@@ -17,7 +19,7 @@ export default function NewGame({ mainMenu }) {
                     return
                 }
 
-                const response = await fetch("http://localhost:4044/users", {
+                const response = await fetch(`${baseUrl}/users`, {
                     method: "POST",
                     mode: "cors",
                     headers: {

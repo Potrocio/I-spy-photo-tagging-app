@@ -6,10 +6,12 @@ export default function Leaderboard({ mainMenu }) {
     const [scores, setScores] = useState([])
     const [query, setQuery] = useState('')
 
+    const baseUrl = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('http://localhost:4044/users/scores', {
+                const response = await fetch(`${baseUrl}/users/scores`, {
                     method: "GET",
                     mode: "cors",
                 })

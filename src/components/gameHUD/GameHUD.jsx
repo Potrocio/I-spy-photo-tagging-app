@@ -22,7 +22,7 @@ export default function GameHUD({ mainMenu, targetListOpen, toggleTargetList, te
         }, 1000);
 
         return () => clearInterval(interval)
-    }, [])
+    }, [gameFinished])
 
     const hours = Math.floor(secondsCounter / 3600);
     const mins = Math.floor((secondsCounter % 3600) / 60);

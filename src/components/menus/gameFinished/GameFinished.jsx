@@ -24,11 +24,12 @@ export default function GameFinished({ toggleGameFinished }) {
         <>
             <div className={styles.backdrop}></div>
             <div className={styles.menuWrapper}>
-                <p>All targets found!</p>
-                <p>Score: {`${h}:${m}:${s}`}</p>
-                <br />
-                <p>{user.username} check the leaderboard to find your rank!</p>
-                <button onClick={handleClick}>Main menu</button>
+                <p className={styles.title}>All targets found!</p>
+                <div className={styles.messageWrapper}>
+                    <p className={styles.message}>{user.username} check the leaderboard to find your rank!</p>
+                    <p className={styles.scoreDisplay}>Score: {`${h}:${m}:${s}`}</p>
+                </div>
+                <button className={styles.mainMenuButton} onClick={handleClick}>Main menu</button>
             </div>
         </>
     )

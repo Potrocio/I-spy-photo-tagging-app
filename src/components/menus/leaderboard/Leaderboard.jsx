@@ -32,6 +32,8 @@ export default function Leaderboard({ mainMenu }) {
         player.username.toLowerCase().startsWith(query.toLowerCase())
     );
 
+    const rankedFilteredScores = filteredScores.sort((a, b) => a.score - b.score)
+
     function handleChange(e) {
         setQuery(e.target.value)
     }
@@ -48,7 +50,7 @@ export default function Leaderboard({ mainMenu }) {
             <ul className={styles.rankList}>
                 {scores.length === 0 && <li>No scores to display...</li>}
 
-                {scores.length > 0 && filteredScores.length === 0 && (
+                {scores.length > 0 && rankedFilteredScores.length === 0 && (
                     <li>No players match your search.</li>
                 )}
 
@@ -57,8 +59,8 @@ export default function Leaderboard({ mainMenu }) {
                     <div className={styles.headerScore}>Score</div>
                 </div>
 
-                {filteredScores.length > 0 &&
-                    filteredScores.map((player, index) => (
+                {rankedFilteredScores.length > 0 &&
+                    rankedFilteredScores.map((player, index) => (
                         <li key={index} className={styles.rankCard}>
                             <div className={styles.playerName}>{player.username}</div>
                             <div className={styles.playerScore}>{player.score}</div>
